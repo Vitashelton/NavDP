@@ -1,0 +1,72 @@
+# LARS: Learning-based Adaptive Residual Safety Adapter
+# Runtime configuration for real-world deployment
+
+lars:
+  # Risk threshold: risk_score > threshold triggers residual correction
+  risk_threshold: 0.5
+
+  # Scale factor applied to residual_action before adding to raw_action
+  residual_scale: 0.3
+
+  # Model checkpoint path (relative to lars/ directory)
+  model_path: "models/lars_best.pt"
+
+  # Device for inference
+  device: "cuda:0"
+
+  # Enable LARS logging
+  enable_logging: true
+
+  # Log output directory
+  log_dir: "logs/"
+
+  # Maximum log file size in MB before rotation
+  max_log_size_mb: 100
+
+# Depth-to-scan conversion parameters
+depth_to_scan:
+  # Number of angular bins in pseudo-LiDAR scan
+  scan_dim: 64
+
+  # Horizontal band rows [row_start, row_end] in the depth image
+  band_rows: [220, 260]
+
+  # Depth clipping range in meters
+  min_depth: 0.1
+  max_depth: 8.0
+
+  # Input depth unit: "mm" or "meter"
+  input_unit: "meter"
+
+  # Horizontal field of view in radians (D435i: ~87 degrees)
+  hfov_rad: 1.518
+
+  # Whether to normalize scan to [0, 1]
+  normalize: true
+
+# Action adapter parameters
+action_adapter:
+  # Input mode: "velocity", "waypoint", or "trajectory"
+  input_mode: "velocity"
+
+  # Maximum velocities
+  max_vx: 0.5
+  max_vy: 0.3
+  max_omega: 0.5
+
+  # Acceleration limits per second
+  max_accel_vx: 1.0
+  max_accel_vy: 1.0
+  max_accel_omega: 2.0
+
+  # Low-pass filter alpha (0 = no filtering, 1 = no update)
+  lp_alpha: 0.3
+
+  # Deadzone: values with abs < deadzone are zeroed
+  deadzone: 0.02
+
+  # Emergency stop: if True, outputs zero action
+  emergency_stop: false
+
+  # Control timestep in seconds
+  dt: 0.05

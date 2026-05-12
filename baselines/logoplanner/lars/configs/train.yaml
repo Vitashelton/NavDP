@@ -1,0 +1,80 @@
+# LARS Training Configuration
+
+data:
+  # Path to dataset .pt file (built by build_lars_dataset.py)
+  dataset_path: "logs/lars_dataset.pt"
+
+  # Train/val split ratio
+  train_split: 0.85
+
+  # Number of workers for DataLoader
+  num_workers: 4
+
+model:
+  # Input dimensions
+  scan_dim: 64
+  raw_action_dim: 3
+  last_action_dim: 3
+  min_distances_dim: 3
+  goal_heading_dim: 1
+
+  # Hidden layer dimensions
+  hidden_dims: [128, 128, 64]
+
+  # Activation function: "silu" or "relu"
+  activation: "silu"
+
+  # Dropout rate
+  dropout: 0.1
+
+  # Residual output scale (tanh output multiplied by this)
+  residual_output_scale: 0.5
+
+training:
+  # Batch size
+  batch_size: 128
+
+  # Number of epochs
+  epochs: 200
+
+  # Learning rate
+  lr: 0.001
+
+  # Weight decay (L2 regularization)
+  weight_decay: 0.0001
+
+  # Loss weights
+  lambda_residual: 0.5
+  lambda_l2: 0.001
+
+  # Gradient clipping max norm
+  grad_clip_norm: 1.0
+
+  # Scheduler: "cosine", "step", or "none"
+  scheduler: "cosine"
+
+  # Step scheduler params (only used if scheduler == "step")
+  step_size: 50
+  step_gamma: 0.5
+
+  # Early stopping patience (epochs); -1 to disable
+  early_stopping_patience: 30
+
+  # Save best model path
+  save_path: "models/lars_best.pt"
+
+  # Training curve csv output
+  curve_csv: "logs/training_curve.csv"
+
+  # Random seed
+  seed: 42
+
+  # Mixed precision training
+  use_amp: true
+
+logging:
+  # Log interval (batches)
+  log_interval: 10
+
+  # Validation interval (epochs)
+  val_interval: 1

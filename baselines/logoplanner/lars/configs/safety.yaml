@@ -1,0 +1,39 @@
+# LARS Safety Shield Configuration
+# Hard-rule safety layer that runs after learned residual adaptation
+
+safety_shield:
+  # Stop threshold: if front_min < stop_threshold, force stop or slow rotation
+  stop_threshold: 0.3
+
+  # Side threshold: if left/right min < side_threshold, suppress lateral motion
+  side_threshold: 0.2
+
+  # Slowdown threshold: if front_min < slowdown_threshold, scale down vx
+  slowdown_threshold: 0.6
+
+  # Minimum velocity scale when slowing down
+  min_slowdown_scale: 0.2
+
+  # Maximum allowed velocities (hard limit)
+  max_vx: 0.8
+  max_vy: 0.8
+  max_omega: 1.0
+
+  # Scan sector definitions (indices into 64-D scan, 0 = leftmost)
+  # Front sector: indices covering the forward direction
+  front_start_idx: 24
+  front_end_idx: 40
+
+  # Left sector: indices covering the left side
+  left_start_idx: 0
+  left_end_idx: 23
+
+  # Right sector: indices covering the right side
+  right_start_idx: 41
+  right_end_idx: 63
+
+  # Rotation speed when stopped by obstacle (rad/s)
+  rotation_speed: 0.3
+
+  # Whether to prefer rotation over lateral motion when blocked
+  prefer_rotation: true
